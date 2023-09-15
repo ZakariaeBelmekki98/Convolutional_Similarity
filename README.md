@@ -1,4 +1,4 @@
-# Convolutional_Similarity
+# Convolutional Similarity Regularization
 A repo contraining all the code and scripts for the paper proposing the Convolutional Similarity regularization.
 
 # CUDA Library Install
