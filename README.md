@@ -7,8 +7,7 @@ The Convolutional Similarity regularization is only available in a GPU-compatibl
 `pip install .`
 
 Compatible with 
+`PyTorch 2.0.1`
+`CUDA 11.8`
+`Python 3.10.11`
 
-`PyTorch 2.0.1
-CUDA 11.8
-Python 3.10.11
-`
