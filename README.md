@@ -12,8 +12,8 @@ Compatible with
 `PyTorch 2.0.1`
 `CUDA 11.8`
 `Python 3.10.11`
-**
-This step is necessary to be able to use Convolutional Similarity regularization.**
+
+**This step is necessary to be able to use Convolutional Similarity regularization.**
 
 # Using Convolutional Similarity Regularization
 
