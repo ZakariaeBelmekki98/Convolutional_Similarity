@@ -13,3 +13,13 @@ Compatible with
 `CUDA 11.8`
 `Python 3.10.11`
 
+**This step is necessary to be able to use Convolutional Similarity regularization.**
+
+# Using Convolutional Similarity Regularization
+
+It can be incorporated into any model containing 2D Convolutional layer by simly adding the following term to the loss
+
+`loss_conv_sim = ConvSim2DLoss(model)`
+
+The function `ConvSim2DLoss()` is defined in `ConvSimFunctions.py`.
+
