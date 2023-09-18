@@ -58,14 +58,14 @@ def InitMsg():
 if __name__ == '__main__':
     for k in range(REPS):
         InitMsg()
-        transform_train = transforms.Compose([
+        transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
 
-        train_dataset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform_train)
-        test_dataset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, transform=transform_test)
-        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4, pin_memory=True)
+        train_dataset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
+        test_dataset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
+        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=8, pin_memory=True)
         test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1000, shuffle=False, num_workers=4, pin_memory=True)
 
         net1 = None
