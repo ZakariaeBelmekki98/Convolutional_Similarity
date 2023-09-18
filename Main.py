@@ -101,17 +101,23 @@ if __name__ == '__main__':
 
         for epoch in range(EPOCHS):
             begin = time.time()
+            running_loss = 0.0
+            cnt = 0
             for i, data in enumerate(train_loader, 0):
                 inputs, labels = data[0].to(DEVICE), data[1].to(DEVICE)
                 optimizer1.zero_grad(set_to_none=True)
                 outputs = net1(inputs)
                 loss1 = criterion(outputs, labels)
+                
+                running_loss += loss1.item()
+                cnt += 1
                 if BETA != 0:
                     loss1 += BETA * ConvSim2DLoss(net1)
                 loss1.backward()
                 optimizer1.step()
             end = time.time() - begin
             print("Runtime: {:.5f}".format(end))
+            print("Original Loss: {:.5f}".format(running_loss/cnt))
             acc_train = model_accuracy(net1, train_loader, DEVICE)
             acc_test = model_accuracy(net1, test_loader, DEVICE)
 
