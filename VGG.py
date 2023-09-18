@@ -25,7 +25,7 @@ def layers(config, activation="relu"):
 
 
 class VGG19(nn.Module):
-    def __init__(self, name, num_classes=10, activation="relu"):
+    def __init__(self, num_classes=10, activation="relu"):
         super(VGG19, self).__init__()
         self.layers = layers(config, activation)
         flatten_features = 512
