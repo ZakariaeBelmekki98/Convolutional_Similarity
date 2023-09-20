@@ -58,14 +58,14 @@ def InitMsg():
 if __name__ == '__main__':
     for k in range(REPS):
         InitMsg()
-        transform_train = transforms.Compose([
+        transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
 
-        train_dataset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform_train)
-        test_dataset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, transform=transform_test)
-        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4, pin_memory=True)
+        train_dataset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
+        test_dataset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
+        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=8, pin_memory=True)
         test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1000, shuffle=False, num_workers=4, pin_memory=True)
 
         net1 = None
@@ -101,17 +101,23 @@ if __name__ == '__main__':
 
         for epoch in range(EPOCHS):
             begin = time.time()
+            running_loss = 0.0
+            cnt = 0
             for i, data in enumerate(train_loader, 0):
                 inputs, labels = data[0].to(DEVICE), data[1].to(DEVICE)
                 optimizer1.zero_grad(set_to_none=True)
                 outputs = net1(inputs)
                 loss1 = criterion(outputs, labels)
+                
+                running_loss += loss1.item()
+                cnt += 1
                 if BETA != 0:
                     loss1 += BETA * ConvSim2DLoss(net1)
                 loss1.backward()
                 optimizer1.step()
             end = time.time() - begin
             print("Runtime: {:.5f}".format(end))
+            print("Original Loss: {:.5f}".format(running_loss/cnt))
             acc_train = model_accuracy(net1, train_loader, DEVICE)
             acc_test = model_accuracy(net1, test_loader, DEVICE)
 
